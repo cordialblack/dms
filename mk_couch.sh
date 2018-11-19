@@ -14,9 +14,9 @@ docker pull linuxserver/couchpotato
 
 docker create --name=couchpotato \
 	--restart=always \
-	-v /home/couch/config:/config \
-	-v /home/couch/downloads:/downloads \
-	-v /home/couch/movies:/movies \
+	-v /home/couchpotato/config:/config \
+	-v /home/couchpotato/downloads:/downloads \
+	-v /home/couchpotato/movies:/movies \
 	-e PGID=1604 -e PUID=1604 \
 	-e TZ=America/Chicago \
 	-p 5050:5050 \
