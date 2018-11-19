@@ -1,10 +1,13 @@
+base_dir='/usr/local/media'
+home_dir=$base_dir/sabnzbd
+
 groupadd \
         -g 1603 \
         sabnzbd
 
 useradd \
         -m \
-        -d '/home/sabnzbd' \
+        -d $home_dir
         -u 1603 \
         -g 1603 \
         -c 'Sabnzbd Role Account' \
@@ -13,9 +16,9 @@ useradd \
 docker pull linuxserver/sabnzbd
 
 docker create --name=sabnzbd \
-	-v /home/sabnzbd/config:/config \
-	-v /home/sabnzbd/downloads:/downloads \
-	-v /home/sabnzbd/incomplete-downloads:/incomplete-downloads \
+	-v $home_dir/config:/config \
+	-v $home_dir/downloads:/downloads \
+	-v $home_dir/incomplete-downloads:/incomplete-downloads \
 	## -v /usr/local/media:/movies \
 	-e PGID=1603 -e PUID=1603 \
 	-e TZ=America/Chicago \
