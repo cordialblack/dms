@@ -1,7 +1,7 @@
 #!/bin/bash
 
 base_dir='/usr/local/media'
-home_dir=$base_dir/sabnzbd
+home_dir=$base_dir/plex
 
 groupadd \
         -g 1602 \
@@ -20,7 +20,6 @@ docker pull linuxserver/plex
 
 docker create \
 	--name=plex \
-	## --net=host \
 	-p 32400:32400 \
 	-p 32400:32400/udp \
 	-p 32469:32469 \
