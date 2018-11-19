@@ -1,10 +1,13 @@
+base_dir='/usr/local/media'
+home_dir=$base_dir/sonarr
+
 groupadd \
 	-g 1601 \
 	sonarr
 
 useradd \
 	-m \
-	-d '/home/sonarr' \
+	-d $home_dir \
 	-u 1601 \
 	-g 1601 \
 	-c 'Sonarr Role Account' \
@@ -14,9 +17,9 @@ docker pull linuxserver/sonarr
 
 docker create \
 	--name=sonarr \
-	-v /home/sonarr/config:/config \
-	-v /home/sonarr/downloads:/downloads \
-	-v /home/sonarr/tv:/tv \
+	-v $home_dir/config:/config \
+	-v $home_dir/downloads:/downloads \
+	-v $home_dir/tv:/tv \
 	-v /etc/localtime:/etc/localtime:ro \
 	-e TZ=America/Chicago \
 	-e PGID=1601 -e PUID=1601  \

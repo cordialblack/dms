@@ -1,12 +1,15 @@
 #!/bin/bash
 
+base_dir='/usr/local/media'
+home_dir=$base_dir/sabnzbd
+
 groupadd \
         -g 1602 \
         plex
 
 useradd \
         -m \
-        -d '/home/plex' \
+        -d $home_dir \
         -u 1602 \
         -g 1602 \
         -c 'Plex Role Account' \
@@ -27,10 +30,10 @@ docker create \
 	-e VERSION=latest \
 	-e PUID=1602 -e PGID=1602 \
 	-e TZ=America/Chicago \
-	-v /home/plex/config:/config \
-	-v /home/plex/tvseries>:/data/tvshows \
-	-v /home/plex/movies:/data/movies \
-	-v /home/plex/transcode:/transcode \
+	-v $home_dir/config:/config \
+	-v $home_dir/tvseries>:/data/tvshows \
+	-v $home_dir/movies:/data/movies \
+	-v $home_dir/transcode:/transcode \
 	linuxserver/plex
 
 ## docker container start plex
