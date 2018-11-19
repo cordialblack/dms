@@ -24,6 +24,7 @@ docker create \
 	-e TZ=America/Chicago \
 	-e PGID=1600 -e PUID=1600  \
 	-p 7878:7878 \
+	-p 8787:8787 \
 	linuxserver/radarr
 
 ## docker container start radarr
