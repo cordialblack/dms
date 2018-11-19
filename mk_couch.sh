@@ -10,7 +10,7 @@ useradd \
 	-c 'Couchpotato Role Account' \
 	couchpotato
 
-docker pull linuxserver/couchpotaro
+docker pull linuxserver/couchpotato
 
 docker create --name=couchpotato \
 	--restart=always \
@@ -21,3 +21,5 @@ docker create --name=couchpotato \
 	-e TZ=America/Chicago \
 	-p 5050:5050 \
 	linuxserver/couchpotato
+
+## docker container start couchpotato

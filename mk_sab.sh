@@ -22,4 +22,4 @@ docker create --name=sabnzbd \
 	-p 8080:8080 -p 9090:9090 \
 	linuxserver/sabnzbd
 
-docker container start sabnzbd
+## docker container start sabnzbd

@@ -23,4 +23,4 @@ docker create \
 	-p 7878:7878 \
 	linuxserver/radarr
 
-docker container start radarr
+## docker container start radarr

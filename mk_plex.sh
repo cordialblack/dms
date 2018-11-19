@@ -33,4 +33,4 @@ docker create \
 	-v /home/plex/transcode:/transcode \
 	linuxserver/plex
 
-docker container start plex
+## docker container start plex

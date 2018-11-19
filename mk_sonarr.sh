@@ -23,4 +23,4 @@ docker create \
 	-p 8989:8989 \
 	linuxserver/sonarr
 
-docker container start sonarr
+## docker container start sonarr
