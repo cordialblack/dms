@@ -24,6 +24,7 @@ docker create \
 	-e TZ=America/Chicago \
 	-e PGID=1601 -e PUID=1601  \
 	-p 8989:8989 \
+	-p 9898:9898 \
 	linuxserver/sonarr
 
 ## docker container start sonarr
