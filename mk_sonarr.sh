@@ -8,7 +8,7 @@ useradd \
 	-u 1601 \
 	-g 1601 \
 	-c 'Sonarr Role Account' \
-	Sonarr
+	sonarr
 
 docker pull linuxserver/sonarr
 
