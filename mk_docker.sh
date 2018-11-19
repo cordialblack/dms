@@ -4,7 +4,7 @@
 
 apt-get update
 
-apt-get install \
+apt-get -y install \
 	apt-transport-https \
 	ca-certificates \
 	curl \
@@ -20,4 +20,4 @@ sudo add-apt-repository \
 
 apt-get update
 
-apt-get install docker-ce
+apt-get -y install docker-ce
