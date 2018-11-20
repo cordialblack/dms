@@ -21,3 +21,5 @@ sudo add-apt-repository \
 apt-get update
 
 apt-get -y install docker-ce
+
+groupadd dms

@@ -1,9 +1,11 @@
+user='couchpotato'
+group='dms'
 base_dir='/usr/local/media'
-home_dir=$base_dir/couchpotato
+home_dir=$base_dir/$user
 
 groupadd \
 	-g 1604 \
-	couchpotato
+	$user
 
 useradd \
 	-m \
@@ -11,11 +13,12 @@ useradd \
 	-u 1604 \
 	-g 1604 \
 	-c 'Couchpotato Role Account' \
-	couchpotato
+	$user
 
-docker pull linuxserver/couchpotato
+docker pull linuxserver/$user
 
-docker create --name=couchpotato \
+docker create \
+	--name=$user \
 	--restart=always \
 	-v $home_dir/config:/config \
 	-v $home_dir/downloads:/downloads \
@@ -23,6 +26,9 @@ docker create --name=couchpotato \
 	-e PGID=1604 -e PUID=1604 \
 	-e TZ=America/Chicago \
 	-p 5050:5050 \
-	linuxserver/couchpotato
+	linuxserver/$user
+
+chown -R $user:$user $home_dir
+chmod -R 775 $home_dir
 
 ## docker container start couchpotato

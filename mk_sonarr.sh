@@ -1,9 +1,11 @@
+user='sonarr'
+group='dms'
 base_dir='/usr/local/media'
-home_dir=$base_dir/sonarr
+home_dir=$base_dir/$user
 
 groupadd \
 	-g 1601 \
-	sonarr
+	$user
 
 useradd \
 	-m \
@@ -11,12 +13,12 @@ useradd \
 	-u 1601 \
 	-g 1601 \
 	-c 'Sonarr Role Account' \
-	sonarr
+	$user
 
-docker pull linuxserver/sonarr
+docker pull linuxserver/$user
 
 docker create \
-	--name=sonarr \
+	--name=$user \
 	--restart=always \
 	-v $home_dir/config:/config \
 	-v $home_dir/downloads:/downloads \
@@ -26,6 +28,9 @@ docker create \
 	-e PGID=1601 -e PUID=1601  \
 	-p 8989:8989 \
 	-p 9898:9898 \
-	linuxserver/sonarr
+	linuxserver/$user
+
+chown -R $user:$group $home_dir
+chmod -R 775 $home_dir
 
 ## docker container start sonarr

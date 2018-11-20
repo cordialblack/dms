@@ -1,9 +1,12 @@
+user='radarr'
+group='dms'
 base_dir='/usr/local/media'
-home_dir=$base_dir/radarr
+home_dir=$base_dir/$user
+
 
 groupadd \
 	-g 1600 \
-	radarr
+	$user
 
 useradd \
 	-m \
@@ -11,12 +14,12 @@ useradd \
 	-u 1600 \
 	-g 1600 \
 	-c 'Radarr Role Account' \
-	radarr
+	$user
 
-docker pull linuxserver/radarr
+docker pull linuxserver/$user
 
 docker create \
-	--name=radarr \
+	--name=$user \
 	--restart=always \
 	-v $home_dir/config:/config \
 	-v $home_dir/downloads:/downloads \
@@ -26,6 +29,9 @@ docker create \
 	-e PGID=1600 -e PUID=1600  \
 	-p 7878:7878 \
 	-p 8787:8787 \
-	linuxserver/radarr
+	linuxserver/$user
+
+chown -R $user:$user $home_dir
+chmod -R 775 $home_dir
 
 ## docker container start radarr

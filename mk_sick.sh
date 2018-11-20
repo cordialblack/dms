@@ -10,7 +10,7 @@ useradd \
 	-c 'Sickrage Role Account' \
 	sickrage
 
-docker pull linuxserver/sickrage
+docker pull sickchill/sickchill
 
 docker create --name=sickrage \
 	--restart=always \
@@ -22,4 +22,5 @@ docker create --name=sickrage \
 	-p 8081:8081 \
 	linuxserver/sickrage
 
+chown -R sickchill:sickchill $home_dir
 ## docker container start sickrage

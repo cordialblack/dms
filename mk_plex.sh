@@ -1,11 +1,11 @@
-#!/bin/bash
-
+user='plex'
+group='dms'
 base_dir='/usr/local/media'
 home_dir=$base_dir/plex
 
 groupadd \
         -g 1602 \
-        plex
+        $user
 
 useradd \
         -m \
@@ -13,13 +13,13 @@ useradd \
         -u 1602 \
         -g 1602 \
         -c 'Plex Role Account' \
-       	plex 
+       	$user
 
 docker pull linuxserver/plex
 
 
 docker create \
-	--name=plex \
+	--name=$user \
 	--restart=always \
 	-p 32400:32400 \
 	-p 32400:32400/udp \
@@ -35,5 +35,8 @@ docker create \
 	-v $home_dir/movies:/data/movies \
 	-v $home_dir/transcode:/transcode \
 	linuxserver/plex
+
+chown -R $user:$user $home_dir
+chmod -R 775 $home_dir
 
 ## docker container start plex

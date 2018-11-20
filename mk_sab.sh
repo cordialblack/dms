@@ -1,9 +1,11 @@
+user='sabnzbd'
+group='dms'
 base_dir='/usr/local/media'
-home_dir=$base_dir/sabnzbd
+home_dir=$base_dir/$user
 
 groupadd \
         -g 1603 \
-        sabnzbd
+        $user
 
 useradd \
         -m \
@@ -11,12 +13,12 @@ useradd \
         -u 1603 \
         -g 1603 \
         -c 'Sabnzbd Role Account' \
-        sabnzbd
+        $user
 
-docker pull linuxserver/sabnzbd
+docker pull linuxserver/$user
 
 docker create \
-	--name=sabnzbd \
+	--name=$user \
 	--restart=always \
 	-v $home_dir/config:/config \
 	-v $home_dir/downloads:/downloads \
@@ -24,6 +26,9 @@ docker create \
 	-e PGID=1603 -e PUID=1603 \
 	-e TZ=America/Chicago \
 	-p 8080:8080 -p 9090:9090 \
-	linuxserver/sabnzbd
+	linuxserver/$user
+
+chown -R $user:$user $home_dir
+chmod -R 775 $home_dir
 
 ## docker container start sabnzbd
