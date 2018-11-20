@@ -5,6 +5,7 @@ home_dir=$base_dir/plex
 
 groupadd \
         -g 1602 \
+	-G dms \
         $user
 
 useradd \

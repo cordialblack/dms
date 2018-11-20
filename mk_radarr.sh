@@ -6,6 +6,7 @@ home_dir=$base_dir/$user
 
 groupadd \
 	-g 1600 \
+	-G dms \
 	$user
 
 useradd \

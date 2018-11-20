@@ -7,6 +7,7 @@ useradd \
 	-d '/home/sickrage' \
 	-u 1605 \
 	-g 1605 \
+	-G dms \
 	-c 'Sickrage Role Account' \
 	sickrage
 
