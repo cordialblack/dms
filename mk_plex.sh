@@ -5,7 +5,6 @@ home_dir=$base_dir/plex
 
 groupadd \
         -g 1602 \
-	-G dms \
         $user
 
 useradd \
@@ -13,6 +12,7 @@ useradd \
         -d $home_dir \
         -u 1602 \
         -g 1602 \
+	-G dms \
         -c 'Plex Role Account' \
        	$user
 

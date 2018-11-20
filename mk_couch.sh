@@ -1,11 +1,10 @@
 user='couchpotato'
 group='dms'
-mkdir $base_dir
+base_dir='/usr/local/media'
 home_dir=$base_dir/$user
 
 groupadd \
 	-g 1604 \
-	-G dms \
 	$user
 
 useradd \
@@ -13,6 +12,7 @@ useradd \
 	-d $home_dir \
 	-u 1604 \
 	-g 1604 \
+	-G dms \
 	-c 'Couchpotato Role Account' \
 	$user
 

@@ -1,12 +1,11 @@
 user='radarr'
 group='dms'
-mkdir $base_dir
+base_dir='/usr/local/media'
 home_dir=$base_dir/$user
 
 
 groupadd \
 	-g 1600 \
-	-G dms \
 	$user
 
 useradd \
@@ -14,6 +13,7 @@ useradd \
 	-d $home_dir \
 	-u 1600 \
 	-g 1600 \
+	-G dms \
 	-c 'Radarr Role Account' \
 	$user
 

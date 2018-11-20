@@ -5,7 +5,6 @@ home_dir=$base_dir/$user
 
 groupadd \
 	-g 1601 \
-	-G dms \
 	$user
 
 useradd \
@@ -13,6 +12,7 @@ useradd \
 	-d $home_dir \
 	-u 1601 \
 	-g 1601 \
+	-G dms \
 	-c 'Sonarr Role Account' \
 	$user
 

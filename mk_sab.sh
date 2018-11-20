@@ -1,10 +1,10 @@
 user='sabnzbd'
 group='dms'
+base_dir='/usr/local/media'
 home_dir=$base_dir/$user
 
 groupadd \
         -g 1603 \
-	-G dms \
         $user
 
 useradd \
@@ -12,6 +12,7 @@ useradd \
         -d $home_dir \
         -u 1603 \
         -g 1603 \
+	-G dms \
         -c 'Sabnzbd Role Account' \
         $user
 
