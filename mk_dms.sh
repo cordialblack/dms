@@ -8,6 +8,8 @@
 
 ## add a unified group for app user membership
 
+## generate self-signed SSL certificates
+
 ## main body - install services
 
 ## clean up - set permissions on common directories
