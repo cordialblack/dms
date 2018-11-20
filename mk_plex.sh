@@ -20,6 +20,7 @@ docker pull linuxserver/plex
 
 docker create \
 	--name=plex \
+	--restart=always \
 	-p 32400:32400 \
 	-p 32400:32400/udp \
 	-p 32469:32469 \

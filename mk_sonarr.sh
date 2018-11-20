@@ -17,6 +17,7 @@ docker pull linuxserver/sonarr
 
 docker create \
 	--name=sonarr \
+	--restart=always \
 	-v $home_dir/config:/config \
 	-v $home_dir/downloads:/downloads \
 	-v $home_dir/tv:/tv \

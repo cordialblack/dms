@@ -17,6 +17,7 @@ docker pull linuxserver/radarr
 
 docker create \
 	--name=radarr \
+	--restart=always \
 	-v $home_dir/config:/config \
 	-v $home_dir/downloads:/downloads \
 	-v $home_dir/movies:/movies \

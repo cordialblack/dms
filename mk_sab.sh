@@ -15,7 +15,9 @@ useradd \
 
 docker pull linuxserver/sabnzbd
 
-docker create --name=sabnzbd \
+docker create \
+	--name=sabnzbd \
+	--restart=always \
 	-v $home_dir/config:/config \
 	-v $home_dir/downloads:/downloads \
 	-v $home_dir/incomplete-downloads:/incomplete-downloads \
