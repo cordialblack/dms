@@ -22,8 +22,8 @@ docker create \
 	--name=$user \
 	--restart=always \
 	-v $home_dir/config:/config \
-	-v $home_dir/downloads:/downloads \
-	-v $home_dir/movies:/movies \
+	-v $base_dir/downloads:/downloads \
+	-v $base_dir/movies:/movies \
 	-e PGID=1604 -e PUID=1604 \
 	-e TZ=America/Chicago \
 	-p 5050:5050 \
