@@ -23,3 +23,4 @@ apt-get update
 apt-get -y install docker-ce
 
 groupadd dms
+mkdir /usr/local/media

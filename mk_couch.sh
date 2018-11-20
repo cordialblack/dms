@@ -1,6 +1,6 @@
 user='couchpotato'
 group='dms'
-base_dir='/usr/local/media'
+mkdir $base_dir
 home_dir=$base_dir/$user
 
 groupadd \
