@@ -30,7 +30,7 @@ docker create \
 	-v $base_dir/tv>:/data/tvshows \
 	-v $base_dir/kids_tv>:/data/kids_tv\
 	-v $base_dir/movies:/data/movies \
-	-v $base_dir/kids_movies:/data/kids_`movies \
+	-v $base_dir/kids_movies:/data/kids_movies \
 	-v $base_dir/transcode:/transcode \
 	linuxserver/plex
 
