@@ -22,8 +22,8 @@ docker create \
 	--name=$user \
 	--restart=always \
 	-v $home_dir/config:/config \
-	-v $home_dir/downloads:/downloads \
-	-v $home_dir/incomplete-downloads:/incomplete-downloads \
+	-v $base_dir/downloads:/downloads \
+	-v $base_dir/incomplete-downloads:/incomplete-downloads \
 	-e PGID=1603 -e PUID=1603 \
 	-e TZ=America/Chicago \
 	-p 8080:8080 -p 9090:9090 \
