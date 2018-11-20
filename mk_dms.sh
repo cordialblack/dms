@@ -1,3 +1,6 @@
+## Customized variables
+base_dir=''
+
 ## Set up Dockerized Media Server
 
 ## determine linux distribution
