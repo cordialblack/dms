@@ -1,5 +1,10 @@
 ## Customized variables
 base_dir=''
+sabnzbd_user=''
+sonarr_user=''
+radarr_user=''
+plex_user=''
+dms_group='dms'
 
 ## Set up Dockerized Media Server
 

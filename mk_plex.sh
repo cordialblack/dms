@@ -1,7 +1,7 @@
 user='plex'
 group='dms'
 base_dir='/usr/local/media'
-home_dir=$base_dir/plex
+home_dir=$base_dir/home/plex
 
 groupadd \
         -g 1602 \

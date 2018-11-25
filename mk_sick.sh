@@ -1,3 +1,8 @@
+user='sickrage'
+group='dms'
+base_dir='/usr/local/media'
+home_dir=$base_dir/home/$user
+
 groupadd \
 	-g 1605 \
 	sickrage
@@ -13,7 +18,8 @@ useradd \
 
 docker pull sickchill/sickchill
 
-docker create --name=sickrage \
+docker create \
+	--name=sickrage \
 	--restart=always \
 	-v /home/sickrage/config:/config \
 	-v /home/sickrage/downloads:/downloads \
