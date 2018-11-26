@@ -27,8 +27,8 @@ docker create \
 	-e PUID=1602 -e PGID=1602 \
 	-e TZ=America/Chicago \
 	-v $home_dir/config:/config \
-	-v $base_dir/tv>:/data/tvshows \
-	-v $base_dir/kids_tv>:/data/kids_tv\
+	-v $base_dir/tv:/data/tvshows \
+	-v $base_dir/kids_tv:/data/kids_tv\
 	-v $base_dir/movies:/data/movies \
 	-v $base_dir/kids_movies:/data/kids_movies \
 	-v $base_dir/transcode:/transcode \
