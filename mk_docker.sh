@@ -1,5 +1,12 @@
 #!/bin/bash
 
+## variables
+base_dir=''
+home_dir=''
+group=''
+app_list=''
+app_data=''
+
 ## https://docs.docker.com/install/linux/docker-ce/debian/
 . /etc/os-release
 
@@ -36,3 +43,12 @@ chgrp $group /usr/local/media
 chgrp $group /usr/local/media/downloads
 chgrp $group /usr/local/media/tv
 chgrp $group /usr/local/media/movies
+
+
+### Install SAB
+
+
+### Install Sonarr
+
+
+### Install Radarr
