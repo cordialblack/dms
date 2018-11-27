@@ -29,7 +29,7 @@ apt-get update
 
 apt-get -y install docker-ce
 
-group = dms
+group=dms
 groupadd $group
 mkdir /usr/local/media
 mkdir /usr/local/media/downloads
