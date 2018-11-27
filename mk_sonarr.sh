@@ -1,7 +1,7 @@
 user='sonarr'
 group='dms'
 base_dir='/usr/local/media'
-home_dir=$base_dir/$user
+home_dir=$base_dir/home/$user
 
 mkdir -p $home_dir
 

@@ -35,7 +35,7 @@ docker create \
 	-v $base_dir/transcode:/transcode \
 	linuxserver/plex
 
-chown -R $user:$user $home_dir
+chown -R $user:$group $home_dir
 chmod -R 775 $home_dir
 
 ## docker container start plex

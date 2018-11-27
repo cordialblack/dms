@@ -30,7 +30,7 @@ docker create \
 	-p 8080:8080 -p 9090:9090 \
 	linuxserver/$user
 
-chown -R $user:$user $home_dir
+chown -R $user:$group $home_dir
 chmod -R 775 $home_dir
 
 ## docker container start sabnzbd

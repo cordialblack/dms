@@ -1,7 +1,7 @@
 user='radarr'
 group='dms'
 base_dir='/usr/local/media'
-home_dir=$base_dir/$user
+home_dir=$base_dir/home/$user
 
 mkdir -p $home_dir
 
@@ -32,7 +32,7 @@ docker create \
 	-p 8787:8787 \
 	linuxserver/$user
 
-chown -R $user:$user $home_dir
+chown -R $user:$group $home_dir
 chmod -R 775 $home_dir
 
 ## docker container start radarr

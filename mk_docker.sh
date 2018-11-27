@@ -22,5 +22,17 @@ apt-get update
 
 apt-get -y install docker-ce
 
-groupadd dms
+group = dms
+groupadd $group
 mkdir /usr/local/media
+mkdir /usr/local/media/downloads
+mkdir /usr/local/media/tv
+mkdir /usr/local/media/movies
+chmod 775 /usr/local/media
+chmod 775 /usr/local/media/downloads
+chmod 775 /usr/local/media/tv
+chmod 775 /usr/local/media/movies
+chgrp $group /usr/local/media
+chgrp $group /usr/local/media/downloads
+chgrp $group /usr/local/media/tv
+chgrp $group /usr/local/media/movies
