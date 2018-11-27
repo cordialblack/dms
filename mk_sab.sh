@@ -3,12 +3,13 @@ group='dms'
 base_dir='/usr/local/media'
 home_dir=$base_dir/home/$user
 
+mkdir $home_dir
+
 groupadd \
         -g 1603 \
         $user
 
 useradd \
-        -m \
         -d $home_dir \
         -u 1603 \
         -g 1603 \
