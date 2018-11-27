@@ -3,7 +3,7 @@ group='dms'
 base_dir='/usr/local/media'
 home_dir=$base_dir/home/$user
 
-mkdir $home_dir
+mkdir -p $home_dir
 
 groupadd \
         -g 1603 \
