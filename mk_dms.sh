@@ -7,8 +7,7 @@ base_dir='' ## full path to the mount point for persistent data
 ##############################
 
 mkdir $base_dir
-cd $base_dir
-git clone http://github.com/cordialblack/dms-conf .
+cd $base_dir && . git clone http://github.com/cordialblack/dms-conf .
 
 home_dir="$base_dir/home"
 group='dms'
@@ -52,7 +51,7 @@ chgrp $group $base_dir/movies
 user='sabnzbd'
 home_dir=$base_dir/home/$user
 
-mkdir -p $home_dir
+mkdir -p $home_dir/$user
 
 printf "Starting on user $user.\n"
 useradd \
@@ -86,7 +85,7 @@ chmod -R 775 $home_dir
 user='sonarr'
 home_dir=$base_dir/home/$user
 
-mkdir -p $home_dir
+mkdir -p $home_dir/$user
 
 printf "Starting on user $user.\n"
 useradd \
@@ -121,7 +120,7 @@ chmod -R 775 $home_dir
 user='radarr'
 home_dir=$base_dir/home/$user
 
-mkdir -p $home_dir
+mkdir -p $home_dir/$user
 
 printf "Starting on user $user.\n"
 useradd \
@@ -156,7 +155,7 @@ chmod -R 775 $home_dir
 user='plex'
 home_dir=$base_dir/home/plex
 
-mkdir -p $home_dir
+mkdir -p $home_dir/$user
 
 printf "Starting on user $user.\n"
 useradd \
