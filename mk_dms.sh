@@ -7,9 +7,9 @@ base_dir='/usr/local/media' ## full path to the mount point for persistent data
 ##############################
 
 mkdir $base_dir
-git clone http://github.com/cordialblack/dms-conf $base_dir
-
 home_dir="$base_dir/home"
+mkdir $home_dir
+git clone http://github.com/cordialblack/dms-conf $base_dir
 group='dms'
 
 ## figure out which .deb based distro we're running
@@ -49,13 +49,10 @@ chgrp $group $base_dir/movies
 
 ### Install SAB
 user='sabnzbd'
-home_dir=$base_dir/home/$user
-
-mkdir -p $home_dir/$user
 
 printf "Starting on user $user.\n"
 useradd \
-        -d $home_dir \
+        -d $home_dir/$user \
 	-G dms \
         -c 'Sabnzbd Role Account' \
         $user
@@ -68,7 +65,7 @@ docker pull linuxserver/$user
 docker create \
 	--name=$user \
 	--restart=always \
-	-v $home_dir/config:/config \
+	-v $home_dir/$user/config:/config \
 	-v $base_dir/downloads:/downloads \
 	-v $base_dir/incomplete-downloads:/incomplete-downloads \
 	-e PGID=$group_id -e PUID=$user_id \
@@ -77,19 +74,16 @@ docker create \
 	-p 9090:9090 \
 	linuxserver/$user
 
-chown -R $user:$group $home_dir
-chmod -R 775 $home_dir
+chown -R $user:$group $home_dir/$user
+chmod -R 775 $home_dir/$user
 
 ### Install Sonarr
 
 user='sonarr'
-home_dir=$base_dir/home/$user
-
-mkdir -p $home_dir/$user
 
 printf "Starting on user $user.\n"
 useradd \
-	-d $home_dir \
+	-d $home_dir/$user \
 	-G dms \
 	-c 'Sonarr Role Account' \
 	$user
@@ -102,7 +96,7 @@ docker pull linuxserver/$user
 docker create \
 	--name=$user \
 	--restart=always \
-	-v $home_dir/config:/config \
+	-v $home_dir/$user/config:/config \
 	-v $base_dir/downloads:/downloads \
 	-v $base_dir/tv:/tv \
 	-v /etc/localtime:/etc/localtime:ro \
@@ -112,19 +106,16 @@ docker create \
 	-p 9898:9898 \
 	linuxserver/$user
 
-chown -R $user:$group $home_dir
-chmod -R 775 $home_dir
+chown -R $user:$group $home_dir/$user
+chmod -R 775 $home_dir/$user
 
 ### Install Radarr
 
 user='radarr'
-home_dir=$base_dir/home/$user
-
-mkdir -p $home_dir/$user
 
 printf "Starting on user $user.\n"
 useradd \
-	-d $home_dir \
+	-d $home_dir/$user \
 	-G dms \
 	-c 'Radarr Role Account' \
 	$user
@@ -137,7 +128,7 @@ docker pull linuxserver/$user
 docker create \
 	--name=$user \
 	--restart=always \
-	-v $home_dir/config:/config \
+	-v $home_dir/$user/config:/config \
 	-v $base_dir/downloads:/downloads \
 	-v $base_dir/movies:/movies \
 	-v /etc/localtime:/etc/localtime:ro \
@@ -147,19 +138,16 @@ docker create \
 	-p 8787:8787 \
 	linuxserver/$user
 
-chown -R $user:$group $home_dir
-chmod -R 775 $home_dir
+chown -R $user:$group $home_dir/$user
+chmod -R 775 $home_dir/$user
 
 ## install plex container
 
 user='plex'
-home_dir=$base_dir/home/plex
-
-mkdir -p $home_dir/$user
 
 printf "Starting on user $user.\n"
 useradd \
-        -d $home_dir \
+        -d $home_dir/$user \
 	-G dms \
         -c 'Plex Role Account' \
        	$user
@@ -175,7 +163,7 @@ docker create \
 	--net=host \
 	-e VERSION=latest \
 	-e TZ=America/Chicago \
-	-v $home_dir/config:/config \
+	-v $home_dir/$user/config:/config \
 	-v $base_dir/tv:/data/tvshows \
 	-v $base_dir/kids_tv:/data/kids_tv\
 	-v $base_dir/movies:/data/movies \
@@ -183,8 +171,8 @@ docker create \
 	-v $base_dir/transcode:/transcode \
 	linuxserver/plex
 
-chown -R $user:$group $home_dir
-chmod -R 775 $home_dir
+chown -R $user:$group $home_dir/$user
+chmod -R 775 $home_dir/$user
 
 ## docker container start plex
 	
