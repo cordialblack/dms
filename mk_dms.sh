@@ -36,14 +36,17 @@ apt-get -y install docker-ce
 
 groupadd $group
 mkdir $base_dir/downloads
+mkdir $base_dir/incomplete-downloads
 mkdir $base_dir/tv
 mkdir $base_dir/movies
 chmod 775 $base_dir
 chmod 775 $base_dir/downloads
+chmod 775 $base_dir/incomplete-downloads
 chmod 775 $base_dir/tv
 chmod 775 $base_dir/movies
 chgrp $group $base_dir
 chgrp $group $base_dir/downloads
+chgrp $group $base_dir/incomplete-downloads
 chgrp $group $base_dir/tv
 chgrp $group $base_dir/movies
 
