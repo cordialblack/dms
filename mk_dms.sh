@@ -8,7 +8,7 @@ base_dir='' ## full path to the mount point for persistent data
 
 mkdir $base_dir
 cd $base_dir
-git clone https://github.com/cordialblack/dms-conf .
+git clone http://github.com/cordialblack/dms-conf .
 
 home_dir="$base_dir/home"
 group='dms'
@@ -54,8 +54,6 @@ home_dir=$base_dir/home/$user
 
 mkdir -p $home_dir
 
-groupadd $user
-
 useradd \
         -d $home_dir \
 	-G dms \
@@ -88,9 +86,6 @@ user='sonarr'
 home_dir=$base_dir/home/$user
 
 mkdir -p $home_dir
-
-groupadd \
-	$user
 
 useradd \
 	-d $home_dir \
@@ -126,9 +121,6 @@ home_dir=$base_dir/home/$user
 
 mkdir -p $home_dir
 
-groupadd \
-	$user
-
 useradd \
 	-d $home_dir \
 	-G dms \
@@ -162,9 +154,6 @@ user='plex'
 home_dir=$base_dir/home/plex
 
 mkdir -p $home_dir
-
-groupadd \
-        $user
 
 useradd \
         -d $home_dir \
