@@ -8,7 +8,7 @@ base_dir='' ## full path to the mount point for persistent data
 
 mkdir $base_dir
 cd $base_dir
-git clone https://github.com/cordialblack/dms .
+git clone https://github.com/cordialblack/dms-conf .
 
 home_dir="$base_dir/home"
 group='dms'
