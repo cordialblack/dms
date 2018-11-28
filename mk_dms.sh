@@ -73,9 +73,6 @@ docker create \
 	-p 8080:8080 -p 9090:9090 \
 	linuxserver/$user
 
-chown -R $user:$group $home_dir/$user
-chmod -R 775 $home_dir/$user
-
 ### Install Sonarr
 
 user='sonarr'
@@ -104,9 +101,6 @@ docker create \
 	-p 8989:8989 \
 	-p 9898:9898 \
 	linuxserver/$user
-
-chown -R $user:$group $home_dir/$user
-chmod -R 775 $home_dir/$user
 
 ### Install Radarr
 
@@ -137,9 +131,6 @@ docker create \
 	-p 8787:8787 \
 	linuxserver/$user
 
-chown -R $user:$group $home_dir/$user
-chmod -R 775 $home_dir/$user
-
 ## install plex container
 
 user='plex'
@@ -169,9 +160,6 @@ docker create \
 	-v $base_dir/kids_movies:/data/kids_movies \
 	-v $base_dir/transcode:/transcode \
 	linuxserver/plex
-
-chown -R $user:$group $home_dir/$user
-chmod -R 775 $home_dir/$user
 
 ## docker container start plex
 	
