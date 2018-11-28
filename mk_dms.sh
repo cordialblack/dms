@@ -70,8 +70,7 @@ docker create \
 	-v $base_dir/incomplete-downloads:/incomplete-downloads \
 	-e PGID=$group_id -e PUID=$user_id \
 	-e TZ=America/Chicago \
-	-p 8080:8080 \ 
-	-p 9090:9090 \
+	-p 8080:8080 -p 9090:9090 \
 	linuxserver/$user
 
 chown -R $user:$group $home_dir/$user
