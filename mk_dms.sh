@@ -54,6 +54,7 @@ home_dir=$base_dir/home/$user
 
 mkdir -p $home_dir
 
+printf "Starting on user $user.\n"
 useradd \
         -d $home_dir \
 	-G dms \
@@ -87,6 +88,7 @@ home_dir=$base_dir/home/$user
 
 mkdir -p $home_dir
 
+printf "Starting on user $user.\n"
 useradd \
 	-d $home_dir \
 	-G dms \
@@ -121,6 +123,7 @@ home_dir=$base_dir/home/$user
 
 mkdir -p $home_dir
 
+printf "Starting on user $user.\n"
 useradd \
 	-d $home_dir \
 	-G dms \
@@ -155,6 +158,7 @@ home_dir=$base_dir/home/plex
 
 mkdir -p $home_dir
 
+printf "Starting on user $user.\n"
 useradd \
         -d $home_dir \
 	-G dms \
