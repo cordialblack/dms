@@ -9,7 +9,7 @@ base_dir='/usr/local/media' ## full path to the mount point for persistent data
 mkdir $base_dir
 home_dir="$base_dir/home"
 mkdir $home_dir
-git clone http://github.com/cordialblack/dms-conf $base_dir
+git clone http://github.com/cordialblack/dms-cfg $base_dir/.
 group='dms'
 
 ## figure out which .deb based distro we're running
