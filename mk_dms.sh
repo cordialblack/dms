@@ -2,12 +2,12 @@
 
 ## variables #################
 
-base_dir='' ## full path to the mount point for persistent data
+base_dir='/usr/local/media' ## full path to the mount point for persistent data
 
 ##############################
 
 mkdir $base_dir
-cd $base_dir && . git clone http://github.com/cordialblack/dms-conf .
+git clone http://github.com/cordialblack/dms-conf $base_dir
 
 home_dir="$base_dir/home"
 group='dms'
