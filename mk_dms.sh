@@ -42,8 +42,8 @@ mkdir $base_dir/movies
 
 ### Install user
 useradd \
+	-m
         -d $home_dir/$user \
-	-G dms \
         -c 'DMS Role Account'
         $user
 
