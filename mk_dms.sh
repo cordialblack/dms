@@ -9,7 +9,7 @@ base_dir='/usr/local/media' ## full path to the mount point for persistent data
 mkdir $base_dir
 home_dir="$base_dir/home"
 mkdir $home_dir
-git clone http://github.com/cordialblack/dms-cfg $home_dir/.
+#git clone http://github.com/cordialblack/dms-cfg $home_dir/.
 user='dms'
 group='dms'
 
@@ -42,7 +42,6 @@ mkdir $base_dir/movies
 
 ### Install user
 useradd \
-	-m
         -d $home_dir/$user \
         -c 'DMS Role Account'
         $user
