@@ -10,6 +10,7 @@ mkdir $base_dir
 home_dir="$base_dir/home"
 mkdir $home_dir
 git clone http://github.com/cordialblack/dms-cfg $home_dir/.
+user='dms'
 group='dms'
 
 ## figure out which .deb based distro we're running
@@ -34,68 +35,47 @@ apt-get update
 
 apt-get -y install docker-ce
 
-groupadd $group
 mkdir $base_dir/downloads
 mkdir $base_dir/incomplete-downloads
 mkdir $base_dir/tv
 mkdir $base_dir/movies
-chmod 775 $base_dir
-chmod 775 $base_dir/downloads
-chmod 775 $base_dir/incomplete-downloads
-chmod 775 $base_dir/tv
-chmod 775 $base_dir/movies
-chgrp $group $base_dir
-chgrp $group $base_dir/downloads
-chgrp $group $base_dir/incomplete-downloads
-chgrp $group $base_dir/tv
-chgrp $group $base_dir/movies
 
-### Install SAB
-user='sabnzbd'
-
-printf "Starting on user $user.\n"
+### Install user
 useradd \
         -d $home_dir/$user \
 	-G dms \
-        -c 'Sabnzbd Role Account' \
+        -c 'DMS Role Account'
         $user
 
 user_id=`id -u $user`
 group_id=`id -g $user`
 
-docker pull linuxserver/$user
+## Install sabnzbd
+service='sabnzbd'
+
+docker pull linuxserver/$service
 
 docker create \
-	--name=$user \
+	--name=$service \
 	--restart=always \
-	-v $home_dir/$user/config:/config \
+	-v $home_dir/$user/$service:/config \
 	-v $base_dir/downloads:/downloads \
 	-v $base_dir/incomplete-downloads:/incomplete-downloads \
 	-e PGID=$group_id -e PUID=$user_id \
 	-e TZ=America/Chicago \
 	-p 8080:8080 -p 9090:9090 \
-	linuxserver/$user
+	linuxserver/$service
 
 ### Install Sonarr
 
-user='sonarr'
+service='sonarr'
 
-printf "Starting on user $user.\n"
-useradd \
-	-d $home_dir/$user \
-	-G dms \
-	-c 'Sonarr Role Account' \
-	$user
-
-user_id=`id -u $user`
-group_id=`id -g $user`
-
-docker pull linuxserver/$user
+docker pull linuxserver/$service
 
 docker create \
-	--name=$user \
+	--name=$service \
 	--restart=always \
-	-v $home_dir/$user/config:/config \
+	-v $home_dir/$user/$service:/config \
 	-v $base_dir/downloads:/downloads \
 	-v $base_dir/tv:/tv \
 	-v /etc/localtime:/etc/localtime:ro \
@@ -103,28 +83,18 @@ docker create \
 	-e PGID=$group_id -e PUID=$user_id  \
 	-p 8989:8989 \
 	-p 9898:9898 \
-	linuxserver/$user
+	linuxserver/$service
 
 ### Install Radarr
 
-user='radarr'
+service='radarr'
 
-printf "Starting on user $user.\n"
-useradd \
-	-d $home_dir/$user \
-	-G dms \
-	-c 'Radarr Role Account' \
-	$user
-
-user_id=`id -u $user`
-group_id=`id -g $user`
-
-docker pull linuxserver/$user
+docker pull linuxserver/$service
 
 docker create \
 	--name=$user \
 	--restart=always \
-	-v $home_dir/$user/config:/config \
+	-v $home_dir/$user/$service:/config \
 	-v $base_dir/downloads:/downloads \
 	-v $base_dir/movies:/movies \
 	-v /etc/localtime:/etc/localtime:ro \
@@ -132,37 +102,27 @@ docker create \
 	-e PGID=$group_id -e PUID=$user_id  \
 	-p 7878:7878 \
 	-p 8787:8787 \
-	linuxserver/$user
+	linuxserver/$service
 
 ## install plex container
 
-user='plex'
+service='plex'
 
-printf "Starting on user $user.\n"
-useradd \
-        -d $home_dir/$user \
-	-G dms \
-        -c 'Plex Role Account' \
-       	$user
-
-user_id=`id -u $user`
-group_id=`id -g $user`
-
-docker pull linuxserver/plex
+docker pull linuxserver/$service
 
 docker create \
-	--name=$user \
+	--name=$service \
 	--restart=always \
 	--net=host \
 	-e VERSION=latest \
 	-e TZ=America/Chicago \
-	-v $home_dir/$user/config:/config \
+	-v $home_dir/$user/$service:/config \
 	-v $base_dir/tv:/data/tvshows \
 	-v $base_dir/kids_tv:/data/kids_tv\
 	-v $base_dir/movies:/data/movies \
 	-v $base_dir/kids_movies:/data/kids_movies \
 	-v $base_dir/transcode:/transcode \
-	linuxserver/plex
+	linuxserver/$service
 
 ## docker container start plex
 	
