@@ -43,7 +43,7 @@ mkdir $base_dir/movies
 ### Install user
 useradd \
         -d $home_dir/$user \
-        -c 'DMS Role Account'
+        -c 'DMS Role Account' \
         $user
 
 user_id=`id -u $user`
