@@ -58,7 +58,7 @@ docker pull linuxserver/$service
 docker create \
 	--name=$service \
 	--restart=always \
-	-v $home_dir/$user/$service:/config \
+	-v $home_dir/$user/$service/config:/config \
 	-v $base_dir/downloads:/downloads \
 	-v $base_dir/incomplete-downloads:/incomplete-downloads \
 	-e PGID=$group_id -e PUID=$user_id \
@@ -75,7 +75,7 @@ docker pull linuxserver/$service
 docker create \
 	--name=$service \
 	--restart=always \
-	-v $home_dir/$user/$service:/config \
+	-v $home_dir/$user/$service/config:/config \
 	-v $base_dir/downloads:/downloads \
 	-v $base_dir/tv:/tv \
 	-v /etc/localtime:/etc/localtime:ro \
@@ -94,7 +94,7 @@ docker pull linuxserver/$service
 docker create \
 	--name=$user \
 	--restart=always \
-	-v $home_dir/$user/$service:/config \
+	-v $home_dir/$user/$service/config:/config \
 	-v $base_dir/downloads:/downloads \
 	-v $base_dir/movies:/movies \
 	-v /etc/localtime:/etc/localtime:ro \
@@ -116,7 +116,7 @@ docker create \
 	--net=host \
 	-e VERSION=latest \
 	-e TZ=America/Chicago \
-	-v $home_dir/$user/$service:/config \
+	-v $home_dir/$user/$service/config:/config \
 	-v $base_dir/tv:/data/tvshows \
 	-v $base_dir/kids_tv:/data/kids_tv\
 	-v $base_dir/movies:/data/movies \
