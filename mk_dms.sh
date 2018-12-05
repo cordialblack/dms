@@ -7,9 +7,9 @@ base_dir='/usr/local/media' ## full path to the mount point for persistent data
 ##############################
 
 mkdir $base_dir
-home_dir="$base_dir/home"
-mkdir $home_dir
-#git clone http://github.com/cordialblack/dms-cfg $home_dir/.
+conf_dir="$base_dir/config"
+mkdir $conf_dir
+
 user='dms'
 group='dms'
 
@@ -35,12 +35,11 @@ sudo add-apt-repository \
 
 apt-get update
 
+apt-get -y git-crypt
 apt-get -y install docker-ce
 
 ### Install user
 useradd \
-	-m \
-        -d $home_dir/$user \
         -c 'DMS Role Account' \
         $user
 
@@ -62,8 +61,8 @@ all_services=('sabnzbd' 'sonarr' 'radarr' 'plex')
 
 for service in ${all_services[@]}; do
 
-	mkdir $home_dir/$user/$service
-	chown $user $home_dir/$user/$service
+	mkdir -p $conf_dir/$service
+	chown $user $conf_dir/$service
 	docker pull linuxserver/$service
 
 	case $service in
@@ -71,7 +70,7 @@ for service in ${all_services[@]}; do
 			docker create \
 			--name=$service \
 			--restart=always \
-			-v $home_dir/$user/$service:/config \
+			-v $conf_dir/$service:/config \
 			-v $base_dir/downloads:/downloads \
 			-v $base_dir/incomplete-downloads:/incomplete-downloads \
 			-e PGID=$group_id -e PUID=$user_id \
@@ -83,7 +82,7 @@ for service in ${all_services[@]}; do
 			docker create \
 			--name=$service \
 			--restart=always \
-			-v $home_dir/$user/$service:/config \
+			-v $conf_dir/$service:/config \
 			-v $base_dir/downloads:/downloads \
 			-v $base_dir/tv:/tv \
 			-v /etc/localtime:/etc/localtime:ro \
@@ -97,7 +96,7 @@ for service in ${all_services[@]}; do
 			docker create \
 			--name=$service\
 			--restart=always \
-			-v $home_dir/$user/$service:/config \
+			-v $conf_dir/$service:/config \
 			-v $base_dir/downloads:/downloads \
 			-v $base_dir/movies:/movies \
 			-v /etc/localtime:/etc/localtime:ro \
@@ -114,7 +113,7 @@ for service in ${all_services[@]}; do
 			--net=host \
 			-e VERSION=latest \
 			-e TZ=America/Chicago \
-			-v $home_dir/$user/$service:/config \
+			-v $conf_dir/$service:/config \
 			-v $base_dir/tv:/data/tvshows \
 			-v $base_dir/kids_tv:/data/kids_tv\
 			-v $base_dir/movies:/data/movies \
@@ -124,4 +123,26 @@ for service in ${all_services[@]}; do
 			;;
 		*)
 	esac
+
+	docker start $service
+	sleep 3
+	docker stop $service
+
+	case $service in 
+		'sabnzbd')
+
+			;;
+		'sonarr')
+
+			;;
+		'radarr')
+
+			;;
+		'plex')
+
+			;;
+		*)
+	esac
 done
+
+exit
