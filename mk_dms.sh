@@ -44,6 +44,7 @@ mkdir $base_dir/movies
 
 ### Install user
 useradd \
+	-m
         -d $home_dir/$user \
         -c 'DMS Role Account' \
         $user
@@ -57,8 +58,8 @@ all_services=('sabnzbd' 'sonarr' 'radarr' 'plex')
 
 for service in ${all_services[@]}; do
 
-	mkdir $homedir/$user/$service
-	chown $user $homedir/$user/$service
+	mkdir $home_dir/$user/$service
+	chown $user $home_dir/$user/$service
 	docker pull linuxserver/$service
 
 	case $service in
@@ -90,7 +91,7 @@ for service in ${all_services[@]}; do
 			;;
 		'radarr')
 			docker create \
-			--name=$user \
+			--name=$service\
 			--restart=always \
 			-v $home_dir/$user/$service:/config \
 			-v $base_dir/downloads:/downloads \
@@ -119,3 +120,4 @@ for service in ${all_services[@]}; do
 			;;
 		*)
 	esac
+done
