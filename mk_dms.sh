@@ -37,20 +37,24 @@ apt-get update
 
 apt-get -y install docker-ce
 
-mkdir $base_dir/downloads
-mkdir $base_dir/incomplete-downloads
-mkdir $base_dir/tv
-mkdir $base_dir/movies
-
 ### Install user
 useradd \
-	-m
+	-m \
         -d $home_dir/$user \
         -c 'DMS Role Account' \
         $user
 
 user_id=`id -u $user`
 group_id=`id -g $user`
+
+all_directories=('downloads' 'incomplete-downloads' 'tv' 'movies')
+
+for directory in ${all_directories[@]}; do
+
+	mkdir $base_dir/$directory
+	chown -R $user $base_dir/$directory
+	
+done
 
 ### Install services
 
