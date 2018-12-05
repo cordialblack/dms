@@ -18,6 +18,8 @@ group='dms'
 
 apt-get update
 
+apt-get -y upgrade
+
 apt-get -y install \
 	apt-transport-https \
 	ca-certificates \
@@ -49,85 +51,71 @@ useradd \
 user_id=`id -u $user`
 group_id=`id -g $user`
 
-## Install sabnzbd
-service='sabnzbd'
+### Install services
 
-docker pull linuxserver/$service
+all_services=('sabnzbd' 'sonarr' 'radarr' 'plex')
 
-docker create \
-	--name=$service \
-	--restart=always \
-	-v $home_dir/$user/$service/config:/config \
-	-v $base_dir/downloads:/downloads \
-	-v $base_dir/incomplete-downloads:/incomplete-downloads \
-	-e PGID=$group_id -e PUID=$user_id \
-	-e TZ=America/Chicago \
-	-p 8080:8080 -p 9090:9090 \
-	linuxserver/$service
+for service in ${all_services[@]}; do
 
-### Install Sonarr
+	mkdir $homedir/$user/$service
+	chown $user $homedir/$user/$service
+	docker pull linuxserver/$service
 
-service='sonarr'
-
-docker pull linuxserver/$service
-
-docker create \
-	--name=$service \
-	--restart=always \
-	-v $home_dir/$user/$service/config:/config \
-	-v $base_dir/downloads:/downloads \
-	-v $base_dir/tv:/tv \
-	-v /etc/localtime:/etc/localtime:ro \
-	-e TZ=America/Chicago \
-	-e PGID=$group_id -e PUID=$user_id  \
-	-p 8989:8989 \
-	-p 9898:9898 \
-	linuxserver/$service
-
-### Install Radarr
-
-service='radarr'
-
-docker pull linuxserver/$service
-
-docker create \
-	--name=$user \
-	--restart=always \
-	-v $home_dir/$user/$service/config:/config \
-	-v $base_dir/downloads:/downloads \
-	-v $base_dir/movies:/movies \
-	-v /etc/localtime:/etc/localtime:ro \
-	-e TZ=America/Chicago \
-	-e PGID=$group_id -e PUID=$user_id  \
-	-p 7878:7878 \
-	-p 8787:8787 \
-	linuxserver/$service
-
-## install plex container
-
-service='plex'
-
-docker pull linuxserver/$service
-
-docker create \
-	--name=$service \
-	--restart=always \
-	--net=host \
-	-e VERSION=latest \
-	-e TZ=America/Chicago \
-	-v $home_dir/$user/$service/config:/config \
-	-v $base_dir/tv:/data/tvshows \
-	-v $base_dir/kids_tv:/data/kids_tv\
-	-v $base_dir/movies:/data/movies \
-	-v $base_dir/kids_movies:/data/kids_movies \
-	-v $base_dir/transcode:/transcode \
-	linuxserver/$service
-
-## docker container start plex
-	
-	#-p 32400:32400 \
-	#-p 32400:32400/udp \
-	#-p 32469:32469 \
-	#-p 32469:32469/udp \
-	#-p 5353:5353/udp \
-	#-p 1900:1900/udp \
+	case $service in
+		'sabnzbd')
+			docker create \
+			--name=$service \
+			--restart=always \
+			-v $home_dir/$user/$service:/config \
+			-v $base_dir/downloads:/downloads \
+			-v $base_dir/incomplete-downloads:/incomplete-downloads \
+			-e PGID=$group_id -e PUID=$user_id \
+			-e TZ=America/Chicago \
+			-p 8080:8080 -p 9090:9090 \
+			linuxserver/$service
+			;;
+		'sonarr')
+			docker create \
+			--name=$service \
+			--restart=always \
+			-v $home_dir/$user/$service:/config \
+			-v $base_dir/downloads:/downloads \
+			-v $base_dir/tv:/tv \
+			-v /etc/localtime:/etc/localtime:ro \
+			-e TZ=America/Chicago \
+			-e PGID=$group_id -e PUID=$user_id  \
+			-p 8989:8989 \
+			-p 9898:9898 \
+			linuxserver/$service
+			;;
+		'radarr')
+			docker create \
+			--name=$user \
+			--restart=always \
+			-v $home_dir/$user/$service:/config \
+			-v $base_dir/downloads:/downloads \
+			-v $base_dir/movies:/movies \
+			-v /etc/localtime:/etc/localtime:ro \
+			-e TZ=America/Chicago \
+			-e PGID=$group_id -e PUID=$user_id  \
+			-p 7878:7878 \
+			-p 8787:8787 \
+			linuxserver/$service
+			;;
+		'plex')
+			docker create \
+			--name=$service \
+			--restart=always \
+			--net=host \
+			-e VERSION=latest \
+			-e TZ=America/Chicago \
+			-v $home_dir/$user/$service:/config \
+			-v $base_dir/tv:/data/tvshows \
+			-v $base_dir/kids_tv:/data/kids_tv\
+			-v $base_dir/movies:/data/movies \
+			-v $base_dir/kids_movies:/data/kids_movies \
+			-v $base_dir/transcode:/transcode \
+			linuxserver/$service
+			;;
+		*)
+	esac
