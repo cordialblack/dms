@@ -35,7 +35,7 @@ sudo add-apt-repository \
 
 apt-get update
 
-apt-get -y git-crypt
+apt-get -y install git-crypt
 apt-get -y install docker-ce
 
 ### Install user
