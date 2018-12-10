@@ -1,8 +1,8 @@
 Dockerized Debian Media Server
 
-Dockerized Plex and Sabnzbd with options for Sonarr, Radarr, Couchpotato, and Sickrage on Debian.
+Dockerized Plex, Sabnzbd, Sonarr, and Radarr on .deb based distro.
 
 Install scripts to create the Docker infrastructure 
-for a Media Server running on Debian 9 (current).
+for a Media Server.
 
-Persistent configuration files are held in dms-conf
+Persistent configuration files are held in http://github.com/cordialblack/dms-cfg.
