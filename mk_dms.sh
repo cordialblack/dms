@@ -2,7 +2,7 @@
 
 ## variables #################
 
-base_dir='/usr/local/media' ## full path to the mount point for persistent data
+base_dir='/var/lib/showman' ## full path to the mount point for persistent data
 
 ##############################
 
@@ -113,6 +113,7 @@ for service in ${all_services[@]}; do
 			--net=host \
 			-e VERSION=latest \
 			-e TZ=America/Chicago \
+			-e PGID=$group_id -e PUID=$user_id  \
 			-v $conf_dir/$service:/config \
 			-v $base_dir/tv:/data/tvshows \
 			-v $base_dir/kids_tv:/data/kids_tv\
