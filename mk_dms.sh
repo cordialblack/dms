@@ -6,54 +6,66 @@ base_dir='/var/lib/showman' ## full path to the mount point for persistent data
 
 ##############################
 
-mkdir $base_dir
-conf_dir="$base_dir/config"
-mkdir $conf_dir
+if [ "$1" = 'install' ]; then
+	printf "\nStarting DMS install...\n"
+elif [ "$1" = 'update' ]; then
+	printf "\nStarting update of DMS...\n"
+else
+	printf "\nYou must specify 'install' or 'update'\n\n"
+	exit 1
+fi
 
 user='dms'
 group='dms'
+conf_dir="$base_dir/config"
 
-## figure out which .deb based distro we're running
-. /etc/os-release
+if [ "$1" = 'install' ]; then
 
-apt-get update
+	mkdir $base_dir
+	mkdir $conf_dir
 
-apt-get -y upgrade
+	## figure out which .deb based distro we're running
+	. /etc/os-release
 
-apt-get -y install \
-	apt-transport-https \
-	ca-certificates \
-	curl \
-	gnupg2 \
-	software-properties-common
+	apt-get update
 
-curl -fsSL https://download.docker.com/linux/$ID/gpg | sudo apt-key add -
-sudo add-apt-repository \
-	"deb [arch=amd64] https://download.docker.com/linux/$ID \
-	$(lsb_release -cs) \
-	stable"
+	apt-get -y upgrade
 
-apt-get update
+	apt-get -y install \
+		apt-transport-https \
+		ca-certificates \
+		curl \
+		gnupg2 \
+		software-properties-common
 
-apt-get -y install git-crypt
-apt-get -y install docker-ce
+	curl -fsSL https://download.docker.com/linux/$ID/gpg | sudo apt-key add -
+	sudo add-apt-repository \
+		"deb [arch=amd64] https://download.docker.com/linux/$ID \
+		$(lsb_release -cs) \
+		stable"
 
-### Install user
-useradd \
-        -c 'DMS Role Account' \
-        $user
+	apt-get update
 
-user_id=`id -u $user`
-group_id=`id -g $user`
+	apt-get -y install git-crypt
+	apt-get -y install docker-ce
 
-all_directories=('downloads' 'incomplete-downloads' 'tv' 'movies')
+	### Install user
+	useradd \
+       		-c 'DMS Role Account' \
+	        $user
 
-for directory in ${all_directories[@]}; do
+	user_id=`id -u $user`
+	group_id=`id -g $user`
 
-	mkdir $base_dir/$directory
-	chown -R $user $base_dir/$directory
-	
-done
+	all_directories=('downloads' 'incomplete-downloads' 'tv' 'movies' 'kids_movies')
+
+	for directory in ${all_directories[@]}; do
+		if [ ! -d $base_dir/$directory ]; then
+			mkdir $base_dir/$directory
+			chown -R $user $base_dir/$directory
+		fi	
+	done
+fi
 
 ### Install services
 
@@ -61,12 +73,22 @@ all_services=('sabnzbd' 'sonarr' 'radarr' 'plex')
 
 for service in ${all_services[@]}; do
 
-	mkdir -p $conf_dir/$service
-	chown $user $conf_dir/$service
+	printf "Starting work on $service\n\n"
+	if [ "$1" = 'install' ]; then
+		mkdir -p $conf_dir/$service
+		chown $user $conf_dir/$service
+	else
+		docker stop $service
+	fi
+
 	docker pull linuxserver/$service
 
 	case $service in
 		'sabnzbd')
+			printf "Working on $service container\n\n"
+			if [ "$1" = 'update' ]; then
+				docker rm $service
+			fi
 			docker create \
 			--name=$service \
 			--restart=always \
@@ -79,6 +101,10 @@ for service in ${all_services[@]}; do
 			linuxserver/$service
 			;;
 		'sonarr')
+			printf "Working on $service container\n\n"
+			if [ "$1" = 'update' ]; then
+				docker rm $service
+			fi
 			docker create \
 			--name=$service \
 			--restart=always \
@@ -93,6 +119,10 @@ for service in ${all_services[@]}; do
 			linuxserver/$service
 			;;
 		'radarr')
+			printf "Working on $service container\n\n"
+			if [ "$1" = 'update' ]; then
+				docker rm $service
+			fi
 			docker create \
 			--name=$service\
 			--restart=always \
@@ -107,6 +137,10 @@ for service in ${all_services[@]}; do
 			linuxserver/$service
 			;;
 		'plex')
+			printf "Working on $service container\n\n"
+			if [ "$1" = 'update' ]; then
+				docker rm $service
+			fi
 			docker create \
 			--name=$service \
 			--restart=always \
@@ -125,25 +159,9 @@ for service in ${all_services[@]}; do
 		*)
 	esac
 
+	printf "Starting up $service container"
 	docker start $service
-	sleep 3
-	docker stop $service
 
-	case $service in 
-		'sabnzbd')
-
-			;;
-		'sonarr')
-
-			;;
-		'radarr')
-
-			;;
-		'plex')
-
-			;;
-		*)
-	esac
 done
 
-exit
+exit 0
