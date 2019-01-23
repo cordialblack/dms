@@ -54,9 +54,6 @@ if [ "$1" = 'install' ]; then
        		-c 'DMS Role Account' \
 	        $user
 
-	user_id=`id -u $user`
-	group_id=`id -g $user`
-
 	all_directories=('downloads' 'incomplete-downloads' 'tv' 'movies' 'kids_movies')
 
 	for directory in ${all_directories[@]}; do
@@ -67,17 +64,21 @@ if [ "$1" = 'install' ]; then
 	done
 fi
 
+user_id=`id -u $user`
+group_id=`id -g $user`
+
 ### Install services
 
 all_services=('sabnzbd' 'sonarr' 'radarr' 'plex')
 
 for service in ${all_services[@]}; do
 
-	printf "Starting work on $service\n\n"
+	printf "\nStarting work on $service\n\n"
 	if [ "$1" = 'install' ]; then
 		mkdir -p $conf_dir/$service
 		chown $user $conf_dir/$service
 	else
+		printf "\nShutting down $service in docker...\n\n"
 		docker stop $service
 	fi
 
@@ -87,8 +88,10 @@ for service in ${all_services[@]}; do
 		'sabnzbd')
 			printf "Working on $service container\n\n"
 			if [ "$1" = 'update' ]; then
+				printf "Removing existing container for $service\n\n"
 				docker rm $service
 			fi
+			printf "Creating new container for $service\n\n"
 			docker create \
 			--name=$service \
 			--restart=always \
