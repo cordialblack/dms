@@ -69,7 +69,11 @@ group_id=`id -g $user`
 
 ### Install services
 
-all_services=('sabnzbd' 'sonarr' 'radarr' 'plex')
+if [ "$1" = 'install' ]; then
+	all_services=('sabnzbd' 'sonarr' 'radarr' 'plex')
+else
+	all_services=("$2")
+fi
 
 for service in ${all_services[@]}; do
 
