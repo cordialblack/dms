@@ -9,7 +9,7 @@ base_dir='/var/lib/showman' ## full path to the mount point for persistent data
 if [ "$1" = 'install' ]; then
 	printf "\nStarting DMS install...\n"
 elif [ "$1" = 'update' ]; then
-	printf "\nStarting update of DMS...\n"
+	printf "\nStarting update of $2...\n"
 else
 	printf "\nYou must specify 'install' or 'update'\n\n"
 	exit 1
@@ -70,7 +70,7 @@ group_id=`id -g $user`
 ### Install services
 
 if [ "$1" = 'install' ]; then
-	all_services=('sabnzbd' 'sonarr' 'radarr' 'plex')
+	all_services=('organizr' 'sabnzbd' 'sonarr' 'radarr' 'plex')
 else
 	all_services=("$2")
 fi
@@ -86,7 +86,6 @@ for service in ${all_services[@]}; do
 		docker stop $service
 	fi
 
-	docker pull linuxserver/$service
 
 	case $service in
 		'sabnzbd')
@@ -95,6 +94,7 @@ for service in ${all_services[@]}; do
 				printf "Removing existing container for $service\n\n"
 				docker rm $service
 			fi
+			docker pull linuxserver/$service
 			printf "Creating new container for $service\n\n"
 			docker create \
 			--name=$service \
@@ -112,6 +112,7 @@ for service in ${all_services[@]}; do
 			if [ "$1" = 'update' ]; then
 				docker rm $service
 			fi
+			docker pull linuxserver/$service
 			docker create \
 			--name=$service \
 			--restart=always \
@@ -130,6 +131,7 @@ for service in ${all_services[@]}; do
 			if [ "$1" = 'update' ]; then
 				docker rm $service
 			fi
+			docker pull linuxserver/$service
 			docker create \
 			--name=$service\
 			--restart=always \
@@ -148,6 +150,7 @@ for service in ${all_services[@]}; do
 			if [ "$1" = 'update' ]; then
 				docker rm $service
 			fi
+			docker pull linuxserver/$service
 			docker create \
 			--name=$service \
 			--restart=always \
@@ -163,10 +166,24 @@ for service in ${all_services[@]}; do
 			-v $base_dir/transcode:/transcode \
 			linuxserver/$service
 			;;
+		'organizr')
+			printf "Working on $service container\n\n"
+			if [ "$1" = 'update' ]; then
+				docker rm $service
+			fi
+			docker pull lsiocommunity/organizr
+			docker create  \
+			--name=organizr \
+			--restart=always \
+			-v /var/lib/showman/config/organizr/:/config \
+			-e PGID=$group_id -e PUID=$user_id  \
+		        -p 80:80 -p 443:443 \
+			        lsiocommunity/organizr
+			;;
 		*)
 	esac
 
-	printf "Starting up $service container"
+	printf "Starting up $service container\n\n"
 	docker start $service
 
 done
