@@ -70,7 +70,7 @@ group_id=`id -g $user`
 ### Install services
 
 if [ "$1" = 'install' ]; then
-	all_services=('organizr' 'sabnzbd' 'sonarr' 'radarr' 'plex')
+	all_services=('organizr' 'deluge' 'sabnzbd' 'sonarr' 'radarr' 'plex')
 else
 	all_services=("$2")
 fi
@@ -166,6 +166,23 @@ for service in ${all_services[@]}; do
 			-v $base_dir/transcode:/transcode \
 			linuxserver/$service
 			;;
+		'deluge')
+                        printf "Working on $service container\n\n"
+                        if [ "$1" = 'update' ]; then
+                                docker rm $service
+                        fi
+                        docker pull linuxserver/$service
+			docker create \
+  			--name=$service \
+			--net=host \
+			-e PUID=$user_id \
+			-e PGID=$group_id \
+			-e TZ=America/Chicago \
+			-v $conf_dir/$service:/config \
+			-v $base_dir/downloads/:/downloads \
+			--restart unless-stopped \
+			linuxserver/$service
+			;;
 		'organizr')
 			printf "Working on $service container\n\n"
 			if [ "$1" = 'update' ]; then
@@ -178,7 +195,7 @@ for service in ${all_services[@]}; do
 			-v /var/lib/showman/config/organizr/:/config \
 			-e PGID=$group_id -e PUID=$user_id  \
 		        -p 80:80 -p 443:443 \
-			        lsiocommunity/organizr
+		        lsiocommunity/organizr
 			;;
 		*)
 	esac
