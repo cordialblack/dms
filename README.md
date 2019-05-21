@@ -1,8 +1,8 @@
-Dockerized Media Server
+Dockerized Media Server (or the poor man's docker-compose)
 
-Dockerized Plex, Sabnzbd, Sonarr, and Radarr on .deb based distro.
+Plex, Sabnzbd, Organizr, Deluge, Sonarr, and Radarr
 
-Install script to create the Docker infrastructure 
+Install script to create the Docker infrastructure and container install 
 for a Media Server.
 
 
