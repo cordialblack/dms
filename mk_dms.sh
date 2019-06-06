@@ -71,8 +71,15 @@ group_id=`id -g $user`
 
 if [ "$1" = 'install' ]; then
 	all_services=('organizr' 'deluge' 'sabnzbd' 'sonarr' 'radarr' 'plex')
+elif [ "$1" = 'update' ]; then
+	if [ "$2" = 'all' ]; then
+		all_services=('organizr' 'deluge' 'sabnzbd' 'sonarr' 'radarr' 'plex')
+	else
+		all_services=("$2")
+	fi
 else
-	all_services=("$2")
+	printf "Syntax error. Please try again.\n"
+	exit 1;
 fi
 
 for service in ${all_services[@]}; do
