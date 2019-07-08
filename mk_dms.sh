@@ -212,4 +212,8 @@ for service in ${all_services[@]}; do
 
 done
 
+if [ "$1" = 'update' ]; then
+	docker image prune
+fi
+
 exit 0
