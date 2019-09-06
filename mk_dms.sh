@@ -195,14 +195,16 @@ for service in ${all_services[@]}; do
 			if [ "$1" = 'update' ]; then
 				docker rm $service
 			fi
-			docker pull lsiocommunity/organizr
+			docker pull organizrtools/organizr-v2
+			#docker pull lsiocommunity/organizr
 			docker create  \
 			--name=organizr \
 			--restart=always \
 			-v /var/lib/showman/config/organizr/:/config \
 			-e PGID=$group_id -e PUID=$user_id  \
 		        -p 80:80 -p 443:443 \
-		        lsiocommunity/organizr
+		        organizrtools/organizr-v2
+		        #lsiocommunity/organizr
 			;;
 		*)
 	esac
