@@ -2,7 +2,7 @@
 
 ## variables #################
 
-base_dir='/var/lib/showman' ## full path to the mount point for persistent data
+base_dir='/usr/local/showman' ## full path to the mount point for persistent data
 
 ##############################
 
