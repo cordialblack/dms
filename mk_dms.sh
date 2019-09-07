@@ -46,7 +46,7 @@ if [ "$1" = 'install' ]; then
 
 	apt-get update
 
-	apt-get -y install git-crypt
+	## apt-get -y install git-crypt
 	apt-get -y install docker-ce
 
 	### Install user
@@ -200,7 +200,7 @@ for service in ${all_services[@]}; do
 			docker create  \
 			--name=organizr \
 			--restart=always \
-			-v /var/lib/showman/config/organizr/:/config \
+			-v $conf_dir/$service:/config \
 			-e PGID=$group_id -e PUID=$user_id  \
 		        -p 80:80 -p 443:443 \
 		        organizrtools/organizr-v2
