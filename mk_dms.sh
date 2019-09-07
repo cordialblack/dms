@@ -7,7 +7,7 @@ base_dir='/usr/local/showman' ## full path to the mount point for persistent dat
 ##############################
 
 if [ "$1" = 'install' ]; then
-	printf "\nStarting DMS install...\n"
+	printf "\nStarting Showman install...\n"
 elif [ "$1" = 'update' ]; then
 	printf "\nStarting update of $2...\n"
 else
@@ -15,8 +15,8 @@ else
 	exit 1
 fi
 
-user='dms'
-group='dms'
+user='showman'
+group='showman'
 conf_dir="$base_dir/config"
 
 if [ "$1" = 'install' ]; then
@@ -51,7 +51,7 @@ if [ "$1" = 'install' ]; then
 
 	### Install user
 	useradd \
-       		-c 'DMS Role Account' \
+       		-c 'Showman Role Account' \
 	        $user
 
 	all_directories=('downloads' 'incomplete-downloads' 'tv' 'movies' 'kids_movies')
