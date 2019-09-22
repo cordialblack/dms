@@ -164,9 +164,6 @@ for service in ${all_services[@]}; do
 			;;
 		'deluge')
                         printf "Working on $service container\n\n"
-                        if [ "$1" = 'update' ]; then
-                                docker rm $service
-                        fi
                         docker pull linuxserver/$service
 			docker create \
   			--name=$service \
@@ -181,9 +178,6 @@ for service in ${all_services[@]}; do
 			;;
 		'organizr')
 			printf "Working on $service container\n\n"
-			if [ "$1" = 'update' ]; then
-				docker rm $service
-			fi
 			docker pull organizrtools/organizr-v2
 			#docker pull lsiocommunity/organizr
 			docker create  \
