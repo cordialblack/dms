@@ -91,16 +91,14 @@ for service in ${all_services[@]}; do
 	else
 		printf "\nShutting down $service in docker...\n\n"
 		docker stop $service
+		printf "Removing existing container for $service\n\n"
+		docker rm $service
 	fi
 
 
 	case $service in
 		'sabnzbd')
 			printf "Working on $service container\n\n"
-			if [ "$1" = 'update' ]; then
-				printf "Removing existing container for $service\n\n"
-				docker rm $service
-			fi
 			docker pull linuxserver/$service
 			printf "Creating new container for $service\n\n"
 			docker create \
@@ -116,9 +114,6 @@ for service in ${all_services[@]}; do
 			;;
 		'sonarr')
 			printf "Working on $service container\n\n"
-			if [ "$1" = 'update' ]; then
-				docker rm $service
-			fi
 			docker pull linuxserver/$service
 			docker create \
 			--name=$service \
@@ -135,9 +130,6 @@ for service in ${all_services[@]}; do
 			;;
 		'radarr')
 			printf "Working on $service container\n\n"
-			if [ "$1" = 'update' ]; then
-				docker rm $service
-			fi
 			docker pull linuxserver/$service
 			docker create \
 			--name=$service\
@@ -154,9 +146,6 @@ for service in ${all_services[@]}; do
 			;;
 		'plex')
 			printf "Working on $service container\n\n"
-			if [ "$1" = 'update' ]; then
-				docker rm $service
-			fi
 			docker pull linuxserver/$service
 			docker create \
 			--name=$service \
