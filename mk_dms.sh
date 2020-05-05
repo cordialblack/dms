@@ -112,6 +112,20 @@ for service in ${all_services[@]}; do
 			-p 8080:8080 -p 9090:9090 \
 			linuxserver/$service
 			;;
+		'nzbget')
+			printf "Working on $service container\n\n"
+			docker pull linuxserver/$service
+			docker create \
+			--name=$service \
+			-e TZ=America/Chicago \
+			-e PGID=$group_id -e PUID=$user_id  \
+			-p 6789:6789 \
+			-v $conf_dir/$service:/config \
+			-v $base_dir/downloads:/downloads \
+			-v $base_dir/incomplete-downloads:/incomplete-downloads \
+			--restart never \
+			linuxserver/$service
+			;;
 		'sonarr')
 			printf "Working on $service container\n\n"
 			docker pull linuxserver/$service
@@ -159,6 +173,7 @@ for service in ${all_services[@]}; do
 			-v $base_dir/kids_tv:/data/kids_tv\
 			-v $base_dir/movies:/data/movies \
 			-v $base_dir/kids_movies:/data/kids_movies \
+			-v $base_dir/xmas_movies:/data/xmas_movies \
 			-v $base_dir/transcode:/transcode \
 			linuxserver/$service
 			;;
